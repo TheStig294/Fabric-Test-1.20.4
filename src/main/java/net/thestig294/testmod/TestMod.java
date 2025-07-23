@@ -2,18 +2,14 @@ package net.thestig294.testmod;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.Uuids;
 import net.thestig294.testmod.network.ModNetworking;
 import net.thestig294.testmod.screen.ModScreenTextures;
 import net.thestig294.testmod.sound.ModSounds;
@@ -43,9 +39,8 @@ public class TestMod implements ModInitializer {
 //			entity.sendMessage(Text.literal(entity.getName() + " jumped in the caac..."));
 
 			if (entity instanceof ServerPlayerEntity player) {
-//				player.sendMessage(Text.literal(player.getName() + " jumped in the caac..."));
 				player.playSound(ModSounds.JUMP_IN_THE_CAAC, SoundCategory.NEUTRAL, 1.0f, 1.0f);
-				nextSoundTick = tickCount + 400;
+				nextSoundTick = tickCount + 120;
 				player.setHealth(player.defaultMaxHealth);
 				playerSoundName = player.getUuid();
 
@@ -67,6 +62,7 @@ public class TestMod implements ModInitializer {
 
 				for (var player : players) {
 					if (player.getUuid().equals(playerSoundName)) {
+						player.sendMessage(Text.literal("The power of jumping in the caac compels you to live..."), true);
 						player.playSound(SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.NEUTRAL, 1.0f, 1.0f);
 						ServerPlayNetworking.send(player, ModNetworking.DISPLAY_CAAC_SCREEN, PacketByteBufs.empty());
 					}

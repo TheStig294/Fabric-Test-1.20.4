@@ -4,7 +4,8 @@ import net.minecraft.util.Identifier;
 import net.thestig294.testmod.TestMod;
 
 public class ModScreenTextures {
-    public static final Identifier CACC_SCREEN = register("textures/gui/caac_screen.png");
+    public static final Identifier CACC_SCREEN_1 = register("textures/gui/caac_screen_1.png");
+    public static final Identifier CACC_SCREEN_2 = register("textures/gui/caac_screen_2.png");
 
     private static Identifier register(String name){
         return new Identifier(TestMod.MOD_ID, name);
